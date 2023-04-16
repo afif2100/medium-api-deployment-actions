@@ -6,6 +6,8 @@ on:
       - main
     types:
       - closed
+    paths:
+      - "api/*"
 
 jobs:
   build:
@@ -16,7 +18,8 @@ jobs:
         echo The PR was merged
 
     - uses: actions/checkout@v3
-    - id: auth
+    - name: "Gcloud Auth"
+      id: auth
       uses: google-github-actions/auth@v0
       with:
         credentials_json: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
@@ -24,7 +27,8 @@ jobs:
     - name: "Set up Cloud SDK"
       uses: "google-github-actions/setup-gcloud@v0"
 
-    - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
+    - name: "Build Docker and Push"
+      uses: RafikFarhad/push-to-gcr-github-action@v5-beta
       with:
         registry: asia.gcr.io
         project_id: hvzn-development
@@ -39,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     # environment: production
     steps:
-      - name: gcloud auth
+      - name: "Gcloud Auth"
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
@@ -47,8 +51,9 @@ jobs:
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v0"
 
-      - id: "deploy"
-        uses: "google-github-actions/deploy-cloudrun@v0"
+      - name: "Deploy on GCloud Run" 
+        id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v1"
         with:
           service: afif2100-fastapi-app
           region: asia-southeast2
