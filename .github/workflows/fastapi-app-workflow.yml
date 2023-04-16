@@ -37,7 +37,7 @@ jobs:
     name: deploy
     needs: build
     runs-on: ubuntu-latest
-    environment: production
+    # environment: production
     steps:
       - name: gcloud auth
         uses: google-github-actions/auth@v1
