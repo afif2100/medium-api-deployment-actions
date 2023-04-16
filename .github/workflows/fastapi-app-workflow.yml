@@ -15,8 +15,7 @@ jobs:
     - run: |
         echo The PR was merged
 
-    - name: Comment PR
-      uses: thollander/actions-comment-pull-request@v2
+    - uses: github-actions-up-and-running/pr-comment@v1.0.0
       with:
-        message: |
-          The PR was merged ! :wave:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        message: Nice PR!👍
