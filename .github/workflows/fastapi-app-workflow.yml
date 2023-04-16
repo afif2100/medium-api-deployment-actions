@@ -1,6 +1,15 @@
 name: build-and-deploy
 
 on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Build images
+        options: 
+        - build
+        - deploy
+
   pull_request:
     branches:
       - main
@@ -11,7 +20,7 @@ on:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true 
     runs-on: ubuntu-latest
     steps:
     - run: |
