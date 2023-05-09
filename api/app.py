@@ -4,6 +4,7 @@ import numpy as np
 from loguru import logger
 
 
+# call FAST API
 app = FastAPI()
 
 
@@ -29,7 +30,6 @@ async def predict(payload: dict = Body(...)):
     data = payload["data"]
     data = np.array([data])
     print(data)
-
 
     # Load the model
     model = joblib.load("model/model.pkl")
